@@ -22,11 +22,25 @@ public class PrimeiroActivity extends AppCompatActivity {
         final EditText edtURI = (EditText) findViewById(R.id.edtURI);
         Button btOk = (Button) findViewById(R.id.btnOK);
 
+        final EditText edtMensagem = (EditText) findViewById(R.id.edtMensagem);
+        Button btEnviar = (Button) findViewById(R.id.btnEnviar);
+
         btOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri uri = Uri.parse(edtURI.getText().toString());
+                Uri uri = Uri.parse(String.format("http://%s", edtURI.getText().toString()));
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+
+                startActivity(intent);
+
+            }
+        });
+
+        btEnviar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PrimeiroActivity.this, SegundaActivity.class);
+                intent.putExtra("msg", edtMensagem.getText().toString());
                 startActivity(intent);
 
             }
