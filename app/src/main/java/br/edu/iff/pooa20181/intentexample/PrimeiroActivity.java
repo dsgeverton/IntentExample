@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.net.URI;
 import java.net.URL;
 
 public class PrimeiroActivity extends AppCompatActivity {
+
+    private static final int REQUEST_CODE_TERCEIRA = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +27,10 @@ public class PrimeiroActivity extends AppCompatActivity {
 
         final EditText edtMensagem = (EditText) findViewById(R.id.edtMensagem);
         Button btEnviar = (Button) findViewById(R.id.btnEnviar);
+
+        Button btnRetorno = (Button) findViewById(R.id.btnRetorno);
+
+
 
         btOk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,5 +52,26 @@ public class PrimeiroActivity extends AppCompatActivity {
 
             }
         });
+
+        btnRetorno.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent (PrimeiroActivity.this, RetornoActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_TERCEIRA);
+            }
+        });
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+
+        if(resultCode == RESULT_OK && requestCode == REQUEST_CODE_TERCEIRA)
+        {
+            if(data.hasExtra("retorno"))
+            {
+                TextView tRetorno = (TextView) findViewById(R.id.tRetorno);
+                tRetorno.setText(data.getStringExtra("retorno").toString());
+            }
+        }
+
     }
 }
